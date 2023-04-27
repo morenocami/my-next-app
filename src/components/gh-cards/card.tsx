@@ -8,9 +8,8 @@ export interface CardInterface {
   html_url: string;
 }
 
-export const Card: any = ({ data }: { data: CardInterface }) => (
+export const Card = ({ data }: { data: CardInterface }) => (
   <Stack
-    key={data.id}
     direction={"row"}
     spacing={3}
     sx={{

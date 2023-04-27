@@ -1,26 +1,14 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
-import CardList from "@/components/card-list";
-import Form from "@/components/card-form";
-import { useState } from "react";
 import { ToastContainer } from "react-toastify";
-import { CardInterface } from "@/components/card";
+import { AppBar, Tab, Tabs } from "@mui/material";
+import { GHCards } from "@/components/gh-cards";
+import { useState } from "react";
+import { BlankPage } from "@/components/blank/blank";
 
 export default function Home() {
-  const [cardData, setCardData] = useState([
-    {
-      id: 15224521,
-      name: "Camilo Moreno",
-      avatar_url: "https://avatars.githubusercontent.com/u/15224521?v=4",
-      html_url: "https://github.com/morenocami",
-    },
-  ]);
-  const addNewCard = (newCard: CardInterface) => {
-    if (cardData.some((card) => card.id == newCard.id)) return;
-    setCardData((state) => {
-      return [...state, newCard];
-    });
-  };
+  const [selectedTab, setSelectedTab] = useState(0);
+  const views = [GHCards, BlankPage].sort();
 
   return (
     <>
@@ -32,11 +20,42 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <ToastContainer />
-        <h1 style={{ top: 0, position: "absolute", padding: "3rem" }}>
-          Github Cards
-        </h1>
-        <CardList cardData={cardData} />
-        <Form onSubmit={addNewCard} />
+        <AppBar position="fixed" sx={{ top: 0 }}>
+          <Tabs
+            value={selectedTab}
+            onChange={(e, value) => setSelectedTab(value)}
+            centered
+          >
+            {views.map((view) => (
+              <Tab
+                key={`nav-${view.name}`}
+                label={view.name}
+                sx={{
+                  "&.Mui-selected": {
+                    color: "white",
+                    borderBottom: "solid 5px black",
+                    backgroundColor: "blue",
+                  },
+                  "&:hover": {
+                    backgroundColor: "lightblue",
+                    cursor: "pointer",
+                    transition: "background-color 0s",
+                  },
+                  "&:not(:hover)": {
+                    backgroundColor: "transparent",
+                    transition: "background-color 0.5s ease",
+                  },
+                }}
+              />
+            ))}
+          </Tabs>
+        </AppBar>
+
+        {views.map((View, index) => (
+          <div key={`view-${View.name}`} hidden={selectedTab !== index}>
+            {selectedTab === index && <View />}
+          </div>
+        ))}
       </main>
     </>
   );
