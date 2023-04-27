@@ -4,13 +4,23 @@ import CardList from "@/components/card-list";
 import Form from "@/components/card-form";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
+import { CardInterface } from "@/components/card";
 
 export default function Home() {
-  const [cardData, setCardData] = useState([]);
-  const addNewCard = (newCard) =>
+  const [cardData, setCardData] = useState([
+    {
+      id: 15224521,
+      name: "Camilo Moreno",
+      avatar_url: "https://avatars.githubusercontent.com/u/15224521?v=4",
+      html_url: "https://github.com/morenocami",
+    },
+  ]);
+  const addNewCard = (newCard: CardInterface) => {
+    if (cardData.some((card) => card.id == newCard.id)) return;
     setCardData((state) => {
       return [...state, newCard];
     });
+  };
 
   return (
     <>

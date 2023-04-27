@@ -1,6 +1,14 @@
 import Avatar from "@mui/material/Avatar";
 import { Link, Stack, Typography } from "@mui/material";
-export const Card: any = ({ data }) => (
+
+export interface CardInterface {
+  id: number;
+  name: string;
+  avatar_url: string;
+  html_url: string;
+}
+
+export const Card: any = ({ data }: { data: CardInterface }) => (
   <Stack
     key={data.id}
     direction={"row"}
@@ -19,10 +27,9 @@ export const Card: any = ({ data }) => (
         transition: "background-color 0.5s ease",
       },
     }}
+    onClick={() => window.open(data.html_url)}
   >
-    <Link href={data.html_url} target="_blank">
-      <Avatar src={data.avatar_url} sx={{ width: "8rem", height: "8rem" }} />
-    </Link>
+    <Avatar src={data.avatar_url} sx={{ width: "8rem", height: "8rem" }} />
     <Typography component="h3" sx={{ flex: "1" }}>
       {data.name}
     </Typography>

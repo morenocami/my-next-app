@@ -1,12 +1,17 @@
 import { getGithubProfileFromName } from "@/services/github-profile-fetch";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { CardInterface } from "./card";
 
-export default ({ onSubmit }) => {
+interface FormProps {
+  onSubmit: (card: CardInterface) => void;
+}
+
+export default ({ onSubmit }: FormProps) => {
   const [formInput, setFormInput] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newCardData = await getGithubProfileFromName(formInput);
     if (newCardData) {
@@ -29,8 +34,9 @@ export default ({ onSubmit }) => {
         onChange={(e) => setFormInput(e.target.value)}
         required
         type="text"
+        placeholder="github profile name"
       />
-      <button type="submit">Add github card</button>
+      <button type="submit">Add profile</button>
     </form>
   );
 };

@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
-import { Card } from "./card";
+import { Card, CardInterface } from "./card";
 
-export default ({ cardData }) => (
+export default ({ cardData }: { cardData: CardInterface[] }) => (
   <Stack spacing={3}>
     {cardData.map((card) => (
       <Card data={card} />
