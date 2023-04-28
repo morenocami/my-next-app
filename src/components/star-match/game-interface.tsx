@@ -1,9 +1,10 @@
 import Typography from "@mui/material/Typography";
+import { StarGrid } from "./star-grid";
 
-export const GameInterface = () => {
+export const GameInterface = ({ stars = 0 }) => {
   return (
-    <Typography variant="body1" color="initial">
-      test
-    </Typography>
+    <div>
+      <StarGrid size={stars} />
+    </div>
   );
 };
