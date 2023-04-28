@@ -4,11 +4,14 @@ import { ToastContainer } from "react-toastify";
 import { AppBar, Tab, Tabs } from "@mui/material";
 import { GHCards } from "@/components/gh-cards";
 import { useState } from "react";
-import { BlankPage } from "@/components/blank/blank";
+import { StarMatch } from "@/components/star-match";
 
 export default function Home() {
   const [selectedTab, setSelectedTab] = useState(0);
-  const views = [GHCards, BlankPage].sort();
+  const views = [
+    { name: "Star Match", section: StarMatch },
+    { name: "GH Cards", section: GHCards },
+  ];
 
   return (
     <>
@@ -51,9 +54,9 @@ export default function Home() {
           </Tabs>
         </AppBar>
 
-        {views.map((View, index) => (
-          <div key={`view-${View.name}`} hidden={selectedTab !== index}>
-            {selectedTab === index && <View />}
+        {views.map(({ name, section: Section }, index) => (
+          <div key={`view-${name}`} hidden={selectedTab !== index}>
+            {selectedTab === index && <Section />}
           </div>
         ))}
       </main>
